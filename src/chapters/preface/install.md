@@ -1,29 +1,18 @@
-# Installing OCaml
-
-If all you need is a way to follow along with the code examples in this book,
-you don't actually have to install OCaml! The code on each page is executable in
-your browser, as described earlier in this [Preface](about).
-
-If you want to take it a step further but aren't ready to spend time installing
-OCaml yourself, we provide a [virtual machine](../appendix/vm) with OCaml
-pre-installed inside a Linux OS.
-
-But if you want to do OCaml development on your own, you'll need to install it
-on your machine. There's no universally "right" way to do that. The instructions
-below are for Cornell's CS 3110 course, which has goals and needs beyond just
-OCaml. Nonetheless, you might find them to be useful even if you're not a
-student in the course.
+# Installing The Languages
 
 Here's what we're going to install:
 
 - A Unix development environment
-- OPAM, the OCaml Package Manager
-- An OPAM *switch* with the OCaml compiler and some packages
-- The Visual Studio Code editor, with OCaml support
+- The Steel Bank Common Lisp compiler
+- The SWI-Prolog compiler
+- The GNU C compiler
+- The Python compiler
+- The Visual Studio Code editor, with language support
 
-The installation process will rely heavily on the *terminal*, or text interface
-to your computer.  If you're not too familiar with it, you might want to
-brush up with a [terminal tutorial][terminal-tutorial].
+The installation process will rely heavily on the _terminal_, or text interface
+to your computer. If you're not too familiar with it, don't worry about it too
+much for now, we'll setup in-editor tools for you to use too. If you do want to
+learn or brush up on your unix terminal knowledge here's a [terminal tutorial][terminal-tutorial].
 
 [terminal-tutorial]: https://ubuntu.com/tutorials/command-line-for-beginners
 
@@ -37,6 +26,8 @@ good news is that if you do get an error, you're probably not alone. A quick
 google search will often turn up solutions that others have discovered. Of
 course, do think critically about suggestions made by random strangers on the
 internet.
+
+Don't forget to ask for help too if Google doesn't help you get unstuck!
 ```
 
 Let's get started!
@@ -48,40 +39,28 @@ upgrades, do them now. Otherwise when you do get around to upgrading, you might
 have to repeat some or all of this installation process. Better to get it out of
 the way beforehand.
 
-**Linux.** If you're already running Linux, you're done with this step. Proceed
-to OPAM, below.
+**Linux.** If you're already running Linux, you're done with this step. Move to
+the next step below.
 
 **Mac.** Beneath the surface, macOS is already a Unix-based OS. But you're going
-to need some developer tools and a Unix package manager. There are two to pick
-from: [Homebrew][homebrew] and [MacPorts][macports]. From the perspective of
-this textbook and CS 3110, it doesn't matter which you choose. So if you're
-already accustomed to one, feel free to keep using it. Make sure to run its
-update command before continuing with these instructions.
-
-Otherwise, pick one and follow the installation instructions on its website. The
-installation process for Homebrew is typically easier and faster, which might
-nudge you in that direction. If you do choose MacPorts, make sure to follow
-*all* the detailed instructions on its page, including XCode and an X11 server.
-**Do not install both Homebrew and MacPorts**; they aren't meant to co-exist. If
-you change your mind later, make sure to uninstall one before installing the
-other. After you've finished installing either Homebrew or MacPorts, you can
-proceed to OPAM, below.
+to need some developer tools and a Unix package manager. We're going to use the
+[Homebrew][homebrew] tool. Make sure to run the update command before continuing
+with these instructions.
 
 [homebrew]: https://brew.sh/
-[macports]: https://www.macports.org/install.php
 
 **Windows.** Unix development in Windows 10 is made possible by the Windows
 Subsystem for Linux (WSL). Follow [Microsoft's install instructions for
 WSL][wsl]. Here are a few notes on Microsoft's instructions:
 
-- From the perspective of this textbook and CS 3110, it doesn't matter whether
+- From the perspective of this textbook and class, it doesn't matter whether
   you join Windows Insider.
 
-- WSL2 is preferred over WSL1 by OCaml (and WSL2 offers performance and
-  functionality improvements), so install WSL2 if you can.
+- WSL2 is preferred over WSL1 due to performance and functionality improvements,
+  so install WSL2 if you can (if you can't, WSL1 is perfectly fine).
 
 - To open Windows PowerShell as Administrator, click Start, type PowerShell,
-  and it should come up as the best match.  Click "Run as Administrator",
+  and it should come up as the best match. Click "Run as Administrator",
   and click Yes to allow changes.
 
 - To use WSL2 (rather than WSL1) you might need to enable virtualization in your
@@ -108,14 +87,14 @@ WSL][wsl]. Here are a few notes on Microsoft's instructions:
 [wsl]: https://docs.microsoft.com/en-us/windows/wsl/install-manual
 [rh-virt]: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/virtualization_administration_guide/sect-virtualization-troubleshooting-enabling_intel_vt_and_amd_v_virtualization_hardware_extensions_in_bios
 
-When you've finished installing WSL, open the Ubuntu app.  You will be at
-the *Bash prompt*, which looks something like this:
+When you've finished installing WSL, open the Ubuntu app. You will be at
+the _Bash prompt_, which looks something like this:
 
 ```console
 user@machine:$
 ```
 
-Run the following command to update the *APT package manager*, which is what
+Run the following command to update the _APT package manager_, which is what
 helps to install Unix packages:
 
 ```console
@@ -152,232 +131,81 @@ concept to master.
 
 [wsl1-fs]: https://devblogs.microsoft.com/commandline/do-not-change-linux-files-using-windows-apps-and-tools/
 
-We recommend storing your OCaml development work in the WSL filesystem, not the
+We recommend storing your development work in the WSL filesystem, not the
 Windows filesystem.
 
-## Install OPAM
+## Installing Compilers
 
-**Linux.** Follow the [instructions for your distribution][opam-install].
+**Linux.**
 
-**Mac.** If you're using Homebrew, run these commands:
+- AUR: `yay install sbcl swi-prolog vscode ruby`
+- Apt:
+  ```console
+  sudo apt install sbcl swi-prolog ruby
+  curl -OL https://go.microsoft.com/fwlink/?LinkID=760868 | sudo apt install
+  ```
+
+**Mac.** Run this command from your terminal:
 
 ```console
-brew install gpatch
-brew install opam
+brew install sbcl swi-prolog visual-studio-code
 ```
 
-If you're using MacPorts, run this command:
-
-```console
-sudo port install opam
-```
-
-[opam-install]: https://opam.ocaml.org/doc/Install.html
+MacOS comes with GCC and Ruby pre-installed.
 
 **Windows.** Run this command from Ubuntu:
 
 ```console
-sudo apt install -y m4 zip unzip bubblewrap build-essential opam
+sudo apt install sbcl swi-prolog ruby
 ```
 
-## Initialize OPAM
+## Verifying the Installations
 
-```{warning}
-Do not put `sudo` in front of any `opam` commands. That would break your OCaml
-installation.
-```
-
-**Linux, Mac, and WSL2.**  Run:
+You should now have everything installed! To verify this, we're going to run a couple commands:
 
 ```console
-opam init --bare -a -y
+sbcl --help
+swipl --help
+ruby --help
+gcc --help
+code --help
 ```
 
-**WSL1.**  Run:
-
-```console
-opam init --bare -a -y --disable-sandboxing
-```
-
-It is necessary to disable sandboxing because of an [issue involving OPAM and
-WSL1][bwrap].
-
-[bwrap]: https://github.com/ocaml/opam-repository/issues/12050
-
-## Create an OPAM Switch
-
-A *switch* is a named installation of OCaml with a particular compiler version
-and set of packages. You can have many switches and, well, switch between them
-&mdash;whence the name. Create a switch for this semester's CS 3110 by running
-this command:
-
-```console
-opam switch create cs3110-2021fa ocaml-base-compiler.4.12.0
-```
-
-```{tip}
-If that command fails saying that the 4.12.0 compiler can't be found, you
-probably installed OPAM sometime back in the past and now need to update it. Do
-so with `opam update`.
-```
-
-You might be prompted to run the next command.  If so, do it. If not, don't.
-
-```console
-eval $(opam env)
-```
-
-Regardless, continue:
-
-```console
-opam install -y utop odoc ounit2 qcheck bisect_ppx menhir ocaml-lsp-server ocamlformat ocamlformat-rpc
-```
-
-(Make sure to grab that whole line above when you copy it.)
-
-You should now be able to launch utop, the OCaml Universal Toplevel.
-
-```console
-utop
-```
-
-Enter 3110 followed by two semi-colons. Press return. The # is the utop prompt.
-
-```ocaml
-# 3110;;
-- : int = 3110
-```
-
-Stop to appreciate how lovely `3110` is. Then quit utop. Note that you must
-enter the extra # before the quit directive.
-
-```ocaml
-# #quit;;
-```
-
-## Double Check OCaml
-
-Let's pause to double check whether your installation has been successful. It's
-worth the effort!
-
-First, **reboot your computer**. (Really! No matter how silly it might seem, we
-want a clean slate for this test.) Second, run utop, and make sure it still
-works. If it does not, here are some common issues:
-
-- **Are you in the right Unix prompt?** On Mac, make sure you are in whatever
-  Unix shell is the default for your Terminal: don't run bash or zsh or anything
-  else manually to change the shell. On Windows, make sure you are in the Ubuntu
-  app, not PowerShell or Cmd.
-
-- **Is the OPAM environment set?** If utop isn't a recognized command, run
-  `eval $(opam env)` then try running utop again. If utop now works, your login
-  shell is somehow not running the right commands to automatically activate the
-  OPAM environment; you shouldn't have to manually activate the environment with
-  the `eval` command. Probably something went wrong earlier when you ran the
-  `opam init` command. To fix it, follow the "redo" instructions below.
-
-- **Is your switch listed?** Run `opam switch list` and make sure a switch named
-  `cs3110-2021fa` is listed, that it has the 4.12.0 compiler, and that it is the
-  active switch (which is indicated with an arrow beside it). If that switch is
-  present but not active, run `opam switch cs3110-2021fa` then see whether utop
-  works. If that switch is not present, follow the "redo" instructions below.
-
-**Redo Instructions:** Remove the OPAM directory by running `rm -r ~/.opam`,
-then re-run the OPAM initialization command for your OS (given above), then
-re-run the switch creation and package installation commands above. Finally,
-redo the double check: reboot and see whether utop still works. You want to get
-to the point where utop "just works" after a reboot.
+If any of these give you an error, try going back up to read the installation instructions and try again.
 
 ## Visual Studio Code
 
-Visual Studio Code is a great choice as a code editor for OCaml. (Though if you
-are already a power user of Emacs or Vim those are great, too.)
+Visual Studio Code is a great choice of editor for any of these languages.
+We're going to install a couple of things to get VS Code working with
+all of these languages.
 
-- Download and install [Visual Studio Code][vscode] (henceforth, VS Code).
-  Launch VS Code. Find the extensions pane, either by going to View ->
-  Extensions, or by clicking on the icon for it in the column of icons on the
-  left.
-
-- **Windows only:** Install the "Remote - WSL" extension. Second, open a WSL
-  window by using the command "Remote-WSL: New Window" or by running `code .` in
+- **Windows only:** Install the `Remote - WSL` extension. Second, open a WSL
+  window by using the command `Remote-WSL: New Window` or by running `code .` in
   Ubuntu. Either way, make sure you see the green "WSL" indicator in the
   bottom-left of the VS Code window. Follow the rest of the instructions in that
   window.
 
-- **Mac only:** Open the Command Palette and type "shell command" to find the
-  "Shell Command: Install 'code' command in PATH" command. Run it. Then close
+- **Mac only:** Open the Command Palette and type `shell command` to find the
+  `Shell Command: Install 'code' command in PATH` command. Run it. Then close
   any open terminals to let the new path settings take effect.
 
-- **For everyone:** In the extensions pane, search for and install the "OCaml Platform" extension.
-  Be careful to use the extension with _exactly the right name_ - the correct extension will also have an icon of a camel on a black background, as opposed to a red or orange background. **Windows only:**
-  make sure you install the extension with the button that says "Install on WSL:
+- **For everyone:** In the extensions pane, search for and install the following
+  extensions:
+
+  - Alive: Average Lisp VSCode Environment by Rich Heller
+  - VSC-Prolog: Support for Prolog language by arthurwang
+  - C/C++: C/C++ IntelliSense, debugging, and code browsing. by Microsoft
+  - Ruby: Ruby language support and debugging for Visual Studio Code by Peng Lv
+
+  **Windows only:**
+  make sure you install the extensions with the button that says "Install on WSL:
   ...", not with a button that says only "Install". The latter will not
   work.
-   
-```{warning}
-The extensions named simply "OCaml" or "OCaml and Reason IDE" are not the right ones. (They
-are both old and no longer maintained by their developers.)
-``` 
 
-[vscode]: https://code.visualstudio.com/
-
-## Double Check VS Code
-
-Let's make sure VS Code's OCaml support is working.
-
-- Reboot your computer again. (Yeah, that really shouldn't be necessary. But it
-  will detect so many potential mistakes now that it's worth the effort.)
-
-- Open a fresh new Unix shell. **Windows**: remember that's the Ubuntu, not
-  PowerShell or Cmd. **Mac**: remember that you shouldn't be manually switching
-  to a different shell.
-
-- Navigate to a directory of your choice, preferably a subdirectory of your home
-  directory. For example, you might create a directory for your 3110 work inside
-  your home directory:
-  ```console
-  mkdir ~/3110
-  cd ~/3110
-  ```
-  In that directory open VS Code by running:
-  ```console
-  code .
-  ```
-  Go to File -> New File. Save the file with the name `test.ml`. VS Code should
-  give it an orange camel icon.
-
-- Type the following OCaml code then press Return:
-  ```ocaml
-  let x : int = 3110
-  ```
-  As you type, VS Code should colorize the syntax, suggest some completions, and
-  add a little annotation above the line of code. Try changing the `int` you
-  typed to `string`. A squiggle should appear under `3110`. Hover over it to see
-  the error message. Go to View -> Problems to see it there, too. Add double
-  quotes around the integer to make it a string, and the problem will go away.
-
-**If you don't observe those behaviors,** something is wrong with your install.
-Here's how to proceed:
-
-- Do not hardcode any paths in the VS Code settings file, despite any advice you
-  might find online.  That is a band-aid, not a cure of whatever the underlying
-  problem really is.
-
-- Make sure that, from the same Unix prompt as which you launched VS Code, you
-  can successfully complete the double-check instructions for your OPAM switch:
-  can you run utop? is the right switch active? If not, that's the problem you
-  need to solve first. Then return to the VS Code issue. It might be fixed now.
-
-- If you're on WSL and VS Code does add syntax highlighting but does not add
-  squiggles as described above, and/or you get an error about "Sandbox
-  initialization failed", then double-check that you see a green "WSL" indicator
-  in the bottom left of the VS Code window. If you do not, make sure you
-  installed the "Remote - WSL" extension as described above, and that you are
-  launching VS Code from Ubuntu rather than PowerShell or from the Windows GUI.
-
-**If you're still stuck with an issue,** try uninstalling VS Code, rebooting,
-and re-doing all the install instructions above from scratch. Pay close
-attention to any warnings or errors.
+  Not that we're not installing any Java extensions here. I assume that most of you
+  are already comfortable with Eclispe or IntelliJ and would rather use one of those.
+  If not, then the Microsoft `Extension Pack for Java` will provide Java support in
+  vscode.
 
 ## VS Code Settings
 
@@ -387,11 +215,9 @@ selecting Open Settings (JSON). Copy and paste these settings into the window:
 
 ```json
 {
-    "editor.tabSize": 2,
-    "editor.rulers": [
-        80
-    ],
-    "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [80],
+  "editor.formatOnSave": true
 }
 ```
 
@@ -400,11 +226,11 @@ Save the file and close the tab.
 ## Using VS Code Collaboratively
 
 VS Code's [Live Share][liveshare] extension makes it easy and fun to collaborate
-on code with other humans.  You can edit code together like collaborating inside
-a Google Doc.  It even supports a shared voice channel, so there's no need to
-spin up a separate Zoom call.  To install Live Share:
+on code with other humans. You can edit code together like collaborating inside
+a Google Doc. It even supports a shared voice channel, so there's no need to
+spin up a separate Zoom call. To install Live Share:
 
-- Open the Extensions page in VS Code.  Search for "Live Share Extension Pack".
+- Open the Extensions page in VS Code. Search for "Live Share Extension Pack".
   Install it.
 
 - The first time you use Live Share, you will be prompted to login. If you are a
@@ -414,8 +240,8 @@ spin up a separate Zoom call.  To install Live Share:
 
 To collaborate with Live Share:
 
-- The *host* starts the Live Share session.  That generates a URL.  Send the
-  URL to the *guests* however you like (DM, email, etc.).
+- The _host_ starts the Live Share session. That generates a URL. Send the
+  URL to the _guests_ however you like (DM, email, etc.).
 
 - The guest puts that URL into a browser or directly into VS Code, and connects
   to the shared programming session.

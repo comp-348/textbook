@@ -1,10 +1,8 @@
 # Better Programming Through OCaml
 
 Do you already know how to program in a mainstream language like Python or Java?
-Good. This book is for you. It's time to learn how to program better. It's time
-to learn a functional language, OCaml.
-
-{{ video_embed | replace("%%VID%%", "MUcka_SvhLw")}}
+Good. This book is for you. It's time to learn how to program better. We're going
+to explore programming languages and paradigms.
 
 Functional programming provides a different perspective on programming than what
 you have experienced so far. Adapting to that perspective requires letting go
@@ -21,19 +19,19 @@ That won't be easy.
 
 I believe that learning OCaml will make you a better programmer. Here's why:
 
-- You will experience the freedom of *immutability*, in which the values of
+- You will experience the freedom of _immutability_, in which the values of
   so-called "variables" cannot change. Goodbye, debugging.
 
-- You will improve at *abstraction*, which is the practice of avoiding
+- You will improve at _abstraction_, which is the practice of avoiding
   repetition by factoring out commonality. Goodbye, bloated code.
 
-- You will be exposed to a *type system* that you will at first hate because it
+- You will be exposed to a _type system_ that you will at first hate because it
   rejects programs you think are correct. But you will come to love it, because
   you will humbly realize it was right and your programs were wrong. Goodbye,
   failing tests.
 
-- You will be exposed to some of the *theory and implementation of programming
-  languages*, helping you to understand the foundations of what you are saying
+- You will be exposed to some of the _theory and implementation of programming
+  languages_, helping you to understand the foundations of what you are saying
   to the computer when you write code. Goodbye, mysterious and magic
   incantations.
 
